@@ -10,6 +10,8 @@ const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
 const fs = require('fs');
+const handlers = require('./lib/handlers');
+const helpers = require('./lib/helpers');
 
 const httpServer = http.createServer((req, res) => unifiedServer(req, res));
 httpServer.listen(config.httpPort, () => {
@@ -26,17 +28,9 @@ httpsServer.listen(config.httpsPort, () => {
     console.log(`Server listen on port ${config.httpsPort}. Environment ${config.envName}`);
 });
 
-const handlers = {
-    ping: (data, callback) => {
-        callback(200)
-    },
-    notFound: (data, callback) => {
-        callback(404)
-    }
-}
-
 const router = {
-    ping: handlers.ping
+    ping: handlers.ping,
+    users: handlers.users
 }
 
 function unifiedServer(req, res) {
@@ -46,7 +40,6 @@ function unifiedServer(req, res) {
     const method = req.method.toLowerCase();
     const queryStringObject = parsedUrl.query;
     const headers = req.headers;
-
     const decoder = new StringDecoder('utf-8');
     let payload = '';
     req.on('data', data => {
@@ -61,7 +54,7 @@ function unifiedServer(req, res) {
             method,
             queryStringObject,
             headers,
-            payload
+            payload: helpers.parseJsonToObject(payload)
         };
         const chosenHandler = router[trimmedPath] ? router[trimmedPath] : handlers.notFound;
 

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const helpers = require('./helpers')
 
 
 const lib = {
@@ -27,6 +28,10 @@ const lib = {
     },
     read: (dir, file, callback) => {
         fs.readFile(`${lib.baseDir}${dir}/${file}.json`, 'utf-8', (err, data) => {
+            if(!err && data) {
+                const parsedData = helpers.parseJsonToObject(data);
+                return callback(false, parsedData);
+            }
             callback(err, data);
         });
     },
@@ -35,20 +40,20 @@ const lib = {
             if (!err && fileDescriptor) {
                 const stringData = JSON.stringify(data);
 
-                fs.truncate(fileDescriptor, (err) => {
+                fs.ftruncate(fileDescriptor, (err) => {
                     if(err) {
                         return callback(err);
                     }
                     fs.writeFile(fileDescriptor, stringData, (err) => {
                         if(err) {
-                            return callback('Error writing on existing file')
+                            return callback('Error writing on existing file');
                         }
 
                         fs.close(fileDescriptor, (err) => {
                             if(err) {
                                 return callback('Error closing the file');
                             }
-                            callback(false);
+                            return callback(false);
                         })
                     })
                 })
@@ -64,7 +69,7 @@ const lib = {
                 return callback(err);
             }
 
-            callback(false);
+            return callback(false);
         })
     }
 };
