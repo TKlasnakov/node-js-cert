@@ -34,6 +34,21 @@ const helpers = {
             return {};
         }
     },
+    createRandomString(length) {
+        const strLength = typeof length === 'number' && length ? length : false;
+        if(!strLength) {
+            return false;
+        }
+
+        const possibleChars = 'abcdefghijklmnoprstuvwxyz1234567890';
+        let randomString = '';
+
+        for (let i = 0; i < strLength; i++) {
+            randomString += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
+        }
+
+        return randomString;
+    }
 };
 
 module.exports = helpers;

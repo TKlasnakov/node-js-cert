@@ -36,6 +36,16 @@ const constants = {
             name: 'password',
             value: helpers.validateStringData(data.payload.password?.trim(), 'string', 0, false)
         }
+    ],
+    tokens: (data) => [
+        {
+            name: 'phone',
+            value: helpers.validateStringData(data.payload.phone?.trim(), 'string', 10, true)
+        },
+        {
+            name: 'password',
+            value: helpers.validateStringData(data.payload.password?.trim(), 'string', 0, false)
+        }
     ]
 }
 

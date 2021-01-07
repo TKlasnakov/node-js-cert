@@ -13,6 +13,8 @@ const environments = {
     }
 }
 
+const tokenFields =
+
 module.exports = process.env.NODE_ENV ?
     environments[process.env.NODE_ENV.toLowerCase()] || environments.staging
     : environments.staging;
