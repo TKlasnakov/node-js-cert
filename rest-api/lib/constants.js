@@ -46,6 +46,28 @@ const constants = {
             name: 'password',
             value: helpers.validateStringData(data.payload.password?.trim(), 'string', 0, false)
         }
+    ],
+    checks: (data) => [
+        {
+            name: 'protocol',
+            value: helpers.validateAvailableValues(data.payload.protocol, ['https', 'http'])
+        },
+        {
+            name: 'url',
+            value: helpers.validateStringData(data.payload.url?.trim(), 'string', 0, false)
+        },
+        {
+            name: 'methods',
+            value: helpers.validateAvailableValues(data.payload.methods, ['post', 'get', 'put', 'delete'])
+        },
+        {
+            name: 'successCodes',
+            value: helpers.validateArray(data.payload.successCodes)
+        },
+        {
+            name: 'timeOutSeconds',
+            value: helpers.validateNumber(data.payload.timeoutSeconds, 5)
+        }
     ]
 }
 

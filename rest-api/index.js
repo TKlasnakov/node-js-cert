@@ -29,9 +29,9 @@ httpsServer.listen(config.httpsPort, () => {
 });
 
 const router = {
-    ping: handlers.ping,
     users: handlers.users,
-    tokens: handlers.tokens
+    tokens: handlers.tokens,
+    checks: handlers.checks
 }
 
 function unifiedServer(req, res) {
@@ -65,7 +65,6 @@ function unifiedServer(req, res) {
             res.setHeader('Content-Type', 'application/json');
             res.writeHead(statusCode);
             res.end(JSON.stringify(payload));
-            console.log('payload: ', payload);
         });
     })
 }

@@ -3,13 +3,15 @@ const environments = {
         envName: 'staging',
         httpPort: 3000,
         httpsPort: 3001,
-        hashingSecret: 'This is a secret'
+        hashingSecret: 'This is a secret',
+        maxChecks: 5
     },
     production: {
         envName: 'production',
         httpPort: 5000,
         httpsPort: 5001,
-        hashingSecret: 'This is also a secret'
+        hashingSecret: 'This is also a secret',
+        maxChecks: 5
     }
 }
 

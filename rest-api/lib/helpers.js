@@ -24,6 +24,23 @@ const helpers = {
             ? value
             : false;
     },
+    validateAvailableValues: (value, availableValues) => {
+        return availableValues.includes(value) ? value : false;
+    },
+    validateArray(arr) {
+        if (arr instanceof Array && arr.length) {
+            return arr;
+        }
+
+        return false;
+    },
+    validateNumber(value, lessThen) {
+      if(value && value % 1 === 0 && value <= lessThen) {
+          return value;
+      }
+
+      return false;
+    },
     checkFailedValidation: (fields) => fields
         .filter((field) => !field.value)
         .map(field => field.name),
